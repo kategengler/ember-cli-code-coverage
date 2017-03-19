@@ -34,7 +34,13 @@ module.exports = {
   setupPreprocessorRegistry: function(type, registry) {
     if (!this._isCoverageEnabled()) { return; }
 
-    var TemplateInstrumenter = require('./lib/template-instrumenter');
+    const buildTemplateInstrumenter = require('./lib/template-instrumenter');
+    let TemplateInstrumenter = buildTemplateInstrumenter(
+      this._parentName(),
+      this.parent.root,
+      this.registry.extensionsForType('template'),
+      this.project.isEmberCLIAddon()
+    );
 
     registry.add('htmlbars-ast-plugin', {
       name: "template-instrumenter",
