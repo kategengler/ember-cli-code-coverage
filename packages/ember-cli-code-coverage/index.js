@@ -31,6 +31,18 @@ module.exports = {
     this.fileLookup = {};
   },
 
+  setupPreprocessorRegistry: function(type, registry) {
+    if (!this._isCoverageEnabled()) { return; }
+
+    var TemplateInstrumenter = require('./lib/template-instrumenter');
+
+    registry.add('htmlbars-ast-plugin', {
+      name: "template-instrumenter",
+      plugin: TemplateInstrumenter,
+      baseDir: __dirname
+    });
+  },
+
   included(appOrAddon) {
     this._super.included.apply(this, arguments);
 
