@@ -53,8 +53,9 @@ describe('index.js', function () {
         expect(Index.contentFor('test-head')).toEqual(undefined);
       });
 
-      it('returns template for test-body-footer', function () {
+      it('returns template for test-body-footer or code-coverage-footer', function () {
         expect(Index.contentFor('test-body-footer')).toMatch(/sendCoverage/);
+        expect(Index.contentFor('code-coverage-footer')).toMatch(/sendCoverage/);
       });
 
       it('includes the project name in the template for test-body-footer', function () {
@@ -478,7 +479,7 @@ describe('index.js', function () {
             'my-app/services/my-service.js',
             'my-app/utils/my-covered-util.js',
             'my-app/utils/my-uncovered-util.js',
-            
+
           ]);
           expect(Index.fileLookup).toEqual({
             "my-app/services/my-service.js": "lib/my-in-repo-addon/app/services/my-service.js",

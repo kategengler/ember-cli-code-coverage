@@ -60,14 +60,17 @@ module.exports = {
   },
 
   contentFor(type) {
-    if (type === 'test-body-footer' && this._isCoverageEnabled()) {
+    let isRightType = type === 'test-body-footer' || type === 'code-coverage-footer';
+    if (isRightType && this._isCoverageEnabled()) {
       var template = fs
         .readFileSync(path.join(__dirname, 'lib', 'templates', 'test-body-footer.html'))
         .toString();
-      return template.replace(
+      template = template.replace(
         '{%ENTRIES%}',
         JSON.stringify(Object.keys(this.fileLookup).map(file => file.replace(EXT_RE, '')))
       );
+      template = template.replace('{%EMBER_ENV%}', process.env.EMBER_ENV || 'development');
+      return template;
     }
 
     return undefined;

@@ -36,12 +36,12 @@
     after(function(done) {
       sendCoverage(done);
     });
-  } else {
+  } else if ('{%EMBER_ENV%}' === 'test') {
     console.warn('No testing framework found for ember-cli-code-coverage to integrate with.');
   }
 
   function handleCoverageResponse(xhr, callback) {
-    var data = xhr.response;
+    var data = typeof xhr.response === 'string' ? JSON.parse(xhr.response) : xhr.response;
 
     if (data) {
       var results = ['Lines', 'Branches', 'Functions', 'Statements']
