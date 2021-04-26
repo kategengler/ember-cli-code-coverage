@@ -41,7 +41,7 @@
   }
 
   function handleCoverageResponse(xhr, callback) {
-    var data = xhr.response;
+    var data = JSON.parse(xhr.response);
 
     if (data) {
       var results = ['Lines', 'Branches', 'Functions', 'Statements']
