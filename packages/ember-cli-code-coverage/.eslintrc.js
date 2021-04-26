@@ -15,9 +15,7 @@ module.exports = {
   env: {
     browser: true,
   },
-  rules: {
-    'ember/no-jquery': 'error',
-  },
+  rules: {},
   overrides: [
     // node files
     {
@@ -49,11 +47,12 @@ module.exports = {
         node: true,
       },
       plugins: ['node'],
-      rules: Object.assign({}, require('eslint-plugin-node').configs.recommended.rules, {
+      extends: ['plugin:node/recommended'],
+      rules: {
         'no-console': 'off',
         'no-useless-escape': 'off',
         'node/no-unpublished-require': 'off',
-      }),
+      },
     },
 
     // node test files
