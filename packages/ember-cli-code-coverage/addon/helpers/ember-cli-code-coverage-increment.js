@@ -1,5 +1,3 @@
-import Ember from 'ember';
-
 export function emberCliCodeCoverageIncrement(params, hash) {
   let { path, statement, branch, condition } = hash;
 

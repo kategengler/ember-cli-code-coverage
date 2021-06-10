@@ -1,7 +1,27 @@
 'use strict';
 
 const LINE_ENDINGS = /(?:\r\n?|\n)/;
-require('string.prototype.startswith');
+
+var existsSync = require('exists-sync');
+var path = require('path');
+
+function getPathForRealFile(relativePath, root, templateExtensions) {
+  if (existsSync(path.join(root, relativePath))) {
+    return relativePath
+  }
+
+  for (var i = 0, len = templateExtensions.length; i < len; i++) {
+    var extension = templateExtensions[i];
+    var templatePath = relativePath.replace('.js', '.' + extension);
+
+    if (existsSync(templatePath)) {
+      return templatePath;
+    }
+  }
+
+  return null;
+}
+
 function fixPath(relativePath, name, root, templateExtensions, isAddon) {
   // Handle addons
   if (isAddon) {
@@ -45,7 +65,7 @@ module.exports = function(appName, appRoot, templateExtensions, isAddon) {
       this.relativePath = relativePath;
 
       this.coverageData = {
-        path: this.relativePath,
+        path: '/home/test/Dev/ember-cli-code-coverage/test-packages/my-app/my-app/' + this.relativePath.replace(/app\//, ''),
         s: { },
         b: { },
         f: { },
@@ -78,8 +98,9 @@ module.exports = function(appName, appRoot, templateExtensions, isAddon) {
       let index = children.indexOf(node);
       let b = this.syntax.builders;
 
+      console.log(getPathForRealFile(this.relativePath, appRoot, templateExtensions))
       hash.pairs.push(
-        b.pair('path', b.string(this.relativePath))
+        b.pair('path', b.string('/home/test/Dev/ember-cli-code-coverage/test-packages/my-app/my-app/' + this.relativePath.replace(/app\//, '')))
       );
 
       let helper = b.mustache(
@@ -138,14 +159,14 @@ module.exports = function(appName, appRoot, templateExtensions, isAddon) {
 
       this.handleStatement(node);
 
-      this._currentBranch++;
-      this.coverageData.b[this._currentBranch] = [0,0];
-      this.coverageData.branchMap[this._currentBranch] = {
-        start: { line: node.loc.start.line, column: node.loc.start.column },
-        end: { line: node.loc.end.line, column: node.loc.end.column },
-      };
+      if (node.type === 'BlockStatement') {  
+        this._currentBranch++;
+        this.coverageData.b[this._currentBranch] = [0,0];
+        this.coverageData.branchMap[this._currentBranch] = {
+          loc: node.loc
+        };
+        console.log(node)
 
-      if (node.type === 'BlockStatement') {
         this.insertBranchHelper(node.program, node);
       }
     }

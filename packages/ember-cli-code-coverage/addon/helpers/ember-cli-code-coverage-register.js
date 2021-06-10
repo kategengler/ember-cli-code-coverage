@@ -1,6 +1,6 @@
-import Ember from 'ember';
 
 export function emberCliCodeCoverageRegister([rawData]) {
+  console.log(rawData)
   let coverageData = JSON.parse(rawData);
   window.__coverage__[coverageData.path] = coverageData;
 }

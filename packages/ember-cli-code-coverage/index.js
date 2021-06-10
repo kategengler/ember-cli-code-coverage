@@ -36,7 +36,7 @@ module.exports = {
 
     const buildTemplateInstrumenter = require('./lib/template-instrumenter');
     let TemplateInstrumenter = buildTemplateInstrumenter(
-      this._parentName(),
+      this.parent.isEmberCLIAddon() ? 'dummy' : this.parent.name(),
       this.parent.root,
       this.registry.extensionsForType('template'),
       this.project.isEmberCLIAddon()
@@ -219,9 +219,11 @@ module.exports = {
     if (fs.existsSync(dir)) {
       let dirname = path.relative(this.project.root, dir);
       let globs = this.parentRegistry.extensionsForType('js').map(extension => `**/*.${extension}`);
+      globs = globs.concat( this.parentRegistry.extensionsForType('template').map(extension => `**/*.${extension}`));
 
+      console.log(globs)
       return walkSync(dir, { directories: false, globs }).map(file => {
-        const postfix = hasEmberCliTypescript ? file : file.replace(EXT_RE, '.js');
+        const postfix = (hasEmberCliTypescript || file.endsWith('.hbs')) ? file : file.replace(EXT_RE, '.js');
         const module = prefix + '/' + postfix;
         this.fileLookup[module] = path.join(dirname, file);
         return module;
