@@ -31,21 +31,24 @@ module.exports = {
     this.fileLookup = {};
   },
 
-  setupPreprocessorRegistry: function(type, registry) {
+  _setupPreprocessorRegistry: function(registry, include, exclude) {
     if (!this._isCoverageEnabled()) { return; }
 
     const buildTemplateInstrumenter = require('./lib/template-instrumenter');
     let TemplateInstrumenter = buildTemplateInstrumenter(
-      this.parent.isEmberCLIAddon() ? 'dummy' : this.parent.name(),
+      this.parent.name(),
       this.parent.root,
       this.registry.extensionsForType('template'),
-      this.project.isEmberCLIAddon()
+      this.project.isEmberCLIAddon(),
+      include,
+      exclude
     );
 
     registry.add('htmlbars-ast-plugin', {
       name: "template-instrumenter",
       plugin: TemplateInstrumenter,
-      baseDir: __dirname
+      baseDir() { return __dirname; },
+      cacheKey() { return 'template-instrumenter'; },
     });
   },
 
@@ -56,23 +59,26 @@ module.exports = {
 
     if (!this._registeredWithBabel && this._isCoverageEnabled()) {
       let checker = new VersionChecker(this.parent).for('ember-cli-babel', 'npm');
+      
+      const exclude = this._getExcludes();
+      const include = this._getIncludes();
 
       if (checker.satisfies('>= 6.0.0')) {
         const IstanbulPlugin = require.resolve('babel-plugin-istanbul');
-        const exclude = this._getExcludes();
-        const include = this._getIncludes();
-
+        
         [this.app, this._findCoveredAddon(), ...this._findInRepoAddons()]
-          .filter(Boolean)
-          .map(getPlugins)
-          .forEach(plugins => plugins.push([IstanbulPlugin, { exclude, include }]));
+        .filter(Boolean)
+        .map(getPlugins)
+        .forEach(plugins => plugins.push([IstanbulPlugin, { exclude, include }]));
+        
       } else {
         this.project.ui.writeWarnLine(
           'ember-cli-code-coverage: You are using an unsupported ember-cli-babel version,' +
-            'instrumentation will not be available.'
-        );
+          'instrumentation will not be available.'
+          );
       }
 
+      this._setupPreprocessorRegistry(this.parentRegistry, include, exclude);
       this._registeredWithBabel = true;
     }
   },
@@ -221,7 +227,6 @@ module.exports = {
       let globs = this.parentRegistry.extensionsForType('js').map(extension => `**/*.${extension}`);
       globs = globs.concat( this.parentRegistry.extensionsForType('template').map(extension => `**/*.${extension}`));
 
-      console.log(globs)
       return walkSync(dir, { directories: false, globs }).map(file => {
         const postfix = (hasEmberCliTypescript || file.endsWith('.hbs')) ? file : file.replace(EXT_RE, '.js');
         const module = prefix + '/' + postfix;

@@ -2,70 +2,34 @@
 
 const LINE_ENDINGS = /(?:\r\n?|\n)/;
 
-var existsSync = require('exists-sync');
 var path = require('path');
+var TestExclude = require('test-exclude');
 
-function getPathForRealFile(relativePath, root, templateExtensions) {
-  if (existsSync(path.join(root, relativePath))) {
-    return relativePath
-  }
+var _exclude;
 
-  for (var i = 0, len = templateExtensions.length; i < len; i++) {
-    var extension = templateExtensions[i];
-    var templatePath = relativePath.replace('.js', '.' + extension);
+module.exports = function(appName, appRoot, templateExtensions, isAddon, include, exclude) {
 
-    if (existsSync(templatePath)) {
-      return templatePath;
-    }
-  }
+  _exclude = new TestExclude({
+    cwd: appRoot,
+    include,
+    exclude,
+    extension: templateExtensions
+  });
 
-  return null;
-}
-
-function fixPath(relativePath, name, root, templateExtensions, isAddon) {
-  // Handle addons
-  if (isAddon) {
-    // Handle addons (served from dummy app)
-    if (relativePath.startsWith('dummy')) {
-      relativePath = relativePath.replace('dummy', 'app');
-      var dummyPath = path.join('tests', 'dummy', relativePath);
-      return (
-        getPathForRealFile(dummyPath, root, templateExtensions) ||
-        getPathForRealFile(relativePath, root, templateExtensions) ||
-        relativePath
-      );
-    }
-
-    // Handle addons renaming of modules/my-addon or my-addon (depending on ember-cli version)
-    var regex = new RegExp('^(modules/)?' + name + '/');
-    if (regex.test(relativePath)) {
-      relativePath = relativePath.replace(regex, 'addon/');
-      return (
-        getPathForRealFile(relativePath, root, templateExtensions) ||
-        relativePath
-      );
-    }
-  } else {
-    relativePath = relativePath.replace(name, 'app');
-    return getPathForRealFile(relativePath, root, templateExtensions) || relativePath;
-  }
-
-  return relativePath;
-}
-
-module.exports = function(appName, appRoot, templateExtensions, isAddon) {
   return class IstanbulInstrumenter {
     constructor(options) {
-
       this.options = options;
 
       let moduleName = options.meta.moduleName;
-      let relativePath = moduleName && fixPath(moduleName, appName, appRoot, templateExtensions, isAddon);
-
-      this.relativePath = relativePath;
+      if (!moduleName) {
+        return;
+      }
+      
+      this.relativePath = moduleName;
+      this.fullPath = path.join(appRoot, moduleName);
 
       this.coverageData = {
-        path: '/home/test/Dev/ember-cli-code-coverage/test-packages/my-app/my-app/' + this.relativePath.replace(/app\//, ''),
+        path: this.fullPath,
         s: { },
         b: { },
         f: { },
@@ -84,9 +48,7 @@ module.exports = function(appName, appRoot, templateExtensions, isAddon) {
     }
 
     shouldInstrument() {
-      let relativePath = this.relativePath;
-
-      return !relativePath || relativePath.startsWith('app') || relativePath.startsWith('addon');
+      return this.relativePath && _exclude.shouldInstrument(this.relativePath);
     }
 
     currentContainer() {
@@ -98,9 +60,8 @@ module.exports = function(appName, appRoot, templateExtensions, isAddon) {
       let index = children.indexOf(node);
       let b = this.syntax.builders;
 
-      console.log(getPathForRealFile(this.relativePath, appRoot, templateExtensions))
       hash.pairs.push(
-        b.pair('path', b.string('/home/test/Dev/ember-cli-code-coverage/test-packages/my-app/my-app/' + this.relativePath.replace(/app\//, '')))
+        b.pair('path', b.string(this.fullPath))
       );
 
       let helper = b.mustache(
@@ -165,7 +126,6 @@ module.exports = function(appName, appRoot, templateExtensions, isAddon) {
         this.coverageData.branchMap[this._currentBranch] = {
           loc: node.loc
         };
-        console.log(node)
 
         this.insertBranchHelper(node.program, node);
       }
