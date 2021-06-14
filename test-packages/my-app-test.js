@@ -44,6 +44,17 @@ describe('app coverage generation', function () {
     dir(`${BASE_PATH}/coverage`).assertDoesNotExist();
   });
 
+  it('runs coverage on templates when option is set', async function() {
+    dir(`${BASE_PATH}/coverage`).assertDoesNotExist();
+    fs.copySync(`${BASE_PATH}/config/-coverage-template.js`, `${BASE_PATH}/config/coverage.js`);
+
+    let env = { COVERAGE: 'true' };
+    await execa('ember', ['test'], { cwd: BASE_PATH, env });
+
+    let summary = fs.readJSONSync(`${BASE_PATH}/coverage/coverage-summary.json`);
+    expect(summary).toMatchSnapshot();
+  });
+
   it('excludes files when the configuration is set', async function () {
     fs.copySync(`${BASE_PATH}/config/-coverage-excludes.js`, `${BASE_PATH}/config/coverage.js`);
 
