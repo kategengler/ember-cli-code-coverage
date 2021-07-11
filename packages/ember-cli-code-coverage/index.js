@@ -36,26 +36,31 @@ module.exports = {
 
     this.parentRegistry = appOrAddon.registry;
 
-    if (!this._registeredWithBabel && this._isCoverageEnabled()) {
+    if (this._isCoverageEnabled()) {
       let checker = new VersionChecker(this.parent).for('ember-cli-babel', 'npm');
+      
+      const exclude = this._getExcludes();
+      const include = this._getIncludes();
 
-      if (checker.satisfies('>= 6.0.0')) {
-        const IstanbulPlugin = require.resolve('babel-plugin-istanbul');
-        const exclude = this._getExcludes();
-        const include = this._getIncludes();
-
-        [this.app, this._findCoveredAddon(), ...this._findInRepoAddons()]
+      if (!this._registeredWithBabel) {
+        if (checker.satisfies('>= 6.0.0')) {
+          const IstanbulPlugin = require.resolve('babel-plugin-istanbul');
+          
+          [this.app, this._findCoveredAddon(), ...this._findInRepoAddons()]
           .filter(Boolean)
           .map(getPlugins)
           .forEach(plugins => plugins.push([IstanbulPlugin, { exclude, include }]));
-      } else {
-        this.project.ui.writeWarnLine(
-          'ember-cli-code-coverage: You are using an unsupported ember-cli-babel version,' +
+          
+        } else {
+          this.project.ui.writeWarnLine(
+            'ember-cli-code-coverage: You are using an unsupported ember-cli-babel version,' +
             'instrumentation will not be available.'
-        );
+            );
+        }
+        this._registeredWithBabel = true;
       }
 
-      this._registeredWithBabel = true;
+      this._setupPreprocessorRegistry(this.parentRegistry, include, exclude);
     }
   },
 
@@ -112,6 +117,38 @@ module.exports = {
       return this.serverMiddleware({ app }, config);
     }
     attachMiddleware.testMiddleware(app, config);
+  },
+
+
+  treeForAddon() {
+    if (this._isCoverageEnabled()) {
+      return this._super.treeForAddon.apply(this, arguments);
+    }
+  },
+
+  treeForApp() {
+    if (this._isCoverageEnabled()) {
+      return this._super.treeForApp.apply(this, arguments);
+    }
+  },
+
+  _setupPreprocessorRegistry(registry, include, exclude) {
+    if (!this._getConfig().templateCoverage) { return; }
+
+    const buildTemplateInstrumenter = require('./lib/template-instrumenter');
+    let TemplateInstrumenter = buildTemplateInstrumenter(
+      this.parent.root,
+      this.registry.extensionsForType('template'),
+      include,
+      exclude
+    );
+
+    registry.add('htmlbars-ast-plugin', {
+      name: "template-instrumenter",
+      plugin: TemplateInstrumenter,
+      baseDir() { return __dirname; },
+      cacheKey() { return 'template-instrumenter'; },
+    });
   },
 
   /**
@@ -202,8 +239,12 @@ module.exports = {
       let dirname = path.relative(this.project.root, dir);
       let globs = this.parentRegistry.extensionsForType('js').map(extension => `**/*.${extension}`);
 
+      if (this._getConfig().templateCoverage) {
+        globs = globs.concat(this.parentRegistry.extensionsForType('template').map(extension => `**/*.${extension}`));
+      }
+
       return walkSync(dir, { directories: false, globs }).map(file => {
-        const postfix = hasEmberCliTypescript ? file : file.replace(EXT_RE, '.js');
+        const postfix = (hasEmberCliTypescript || file.endsWith('.hbs')) ? file : file.replace(EXT_RE, '.js');
         const module = prefix + '/' + postfix;
         this.fileLookup[module] = path.join(dirname, file);
         return module;

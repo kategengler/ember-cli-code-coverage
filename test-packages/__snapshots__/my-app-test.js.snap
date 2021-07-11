@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`app coverage generation excludes files when the configuration is set 1`] = `
+exports[`app coverage generation runs coverage on templates when option is set 1`] = `
 Object {
   "app/app.js": Object {
     "branches": Object {
@@ -28,33 +28,7 @@ Object {
       "total": 4,
     },
   },
-  "app/router.js": Object {
-    "branches": Object {
-      "covered": 0,
-      "pct": 100,
-      "skipped": 0,
-      "total": 0,
-    },
-    "functions": Object {
-      "covered": 0,
-      "pct": 0,
-      "skipped": 0,
-      "total": 1,
-    },
-    "lines": Object {
-      "covered": 1,
-      "pct": 33.33,
-      "skipped": 0,
-      "total": 3,
-    },
-    "statements": Object {
-      "covered": 1,
-      "pct": 33.33,
-      "skipped": 0,
-      "total": 3,
-    },
-  },
-  "app/utils/my-covered-util.js": Object {
+  "app/components/test-component.js": Object {
     "branches": Object {
       "covered": 0,
       "pct": 100,
@@ -68,99 +42,16 @@ Object {
       "total": 1,
     },
     "lines": Object {
-      "covered": 1,
+      "covered": 2,
       "pct": 100,
-      "skipped": 0,
-      "total": 1,
-    },
-    "statements": Object {
-      "covered": 1,
-      "pct": 100,
-      "skipped": 0,
-      "total": 1,
-    },
-  },
-  "app/utils/my-uncovered-util.js": Object {
-    "branches": Object {
-      "covered": 0,
-      "pct": 0,
-      "skipped": 0,
-      "total": 0,
-    },
-    "functions": Object {
-      "covered": 0,
-      "pct": 0,
-      "skipped": 0,
-      "total": 0,
-    },
-    "lines": Object {
-      "covered": 0,
-      "pct": 0,
-      "skipped": 0,
-      "total": 0,
-    },
-    "statements": Object {
-      "covered": 0,
-      "pct": 0,
-      "skipped": 0,
-      "total": 0,
-    },
-  },
-  "total": Object {
-    "branches": Object {
-      "covered": 0,
-      "pct": 100,
-      "skipped": 0,
-      "total": 0,
-    },
-    "functions": Object {
-      "covered": 1,
-      "pct": 50,
       "skipped": 0,
       "total": 2,
     },
-    "lines": Object {
-      "covered": 6,
-      "pct": 75,
-      "skipped": 0,
-      "total": 8,
-    },
     "statements": Object {
-      "covered": 6,
-      "pct": 75,
-      "skipped": 0,
-      "total": 8,
-    },
-  },
-}
-`;
-
-exports[`app coverage generation merges coverage when tests are run in parallel 1`] = `
-Object {
-  "app/app.js": Object {
-    "branches": Object {
-      "covered": 0,
+      "covered": 2,
       "pct": 100,
       "skipped": 0,
-      "total": 0,
-    },
-    "functions": Object {
-      "covered": 0,
-      "pct": 100,
-      "skipped": 0,
-      "total": 0,
-    },
-    "lines": Object {
-      "covered": 4,
-      "pct": 100,
-      "skipped": 0,
-      "total": 4,
-    },
-    "statements": Object {
-      "covered": 4,
-      "pct": 100,
-      "skipped": 0,
-      "total": 4,
+      "total": 2,
     },
   },
   "app/router.js": Object {
@@ -171,22 +62,74 @@ Object {
       "total": 0,
     },
     "functions": Object {
-      "covered": 0,
-      "pct": 0,
+      "covered": 1,
+      "pct": 100,
       "skipped": 0,
       "total": 1,
     },
     "lines": Object {
-      "covered": 1,
-      "pct": 33.33,
+      "covered": 3,
+      "pct": 100,
       "skipped": 0,
       "total": 3,
     },
     "statements": Object {
-      "covered": 1,
-      "pct": 33.33,
+      "covered": 3,
+      "pct": 100,
       "skipped": 0,
       "total": 3,
+    },
+  },
+  "app/templates/application.hbs": Object {
+    "branches": Object {
+      "covered": 0,
+      "pct": 100,
+      "skipped": 0,
+      "total": 0,
+    },
+    "functions": Object {
+      "covered": 0,
+      "pct": 100,
+      "skipped": 0,
+      "total": 0,
+    },
+    "lines": Object {
+      "covered": 3,
+      "pct": 100,
+      "skipped": 0,
+      "total": 3,
+    },
+    "statements": Object {
+      "covered": 3,
+      "pct": 100,
+      "skipped": 0,
+      "total": 3,
+    },
+  },
+  "app/templates/components/test-component.hbs": Object {
+    "branches": Object {
+      "covered": 0,
+      "pct": 0,
+      "skipped": 0,
+      "total": 2,
+    },
+    "functions": Object {
+      "covered": 0,
+      "pct": 100,
+      "skipped": 0,
+      "total": 0,
+    },
+    "lines": Object {
+      "covered": 2,
+      "pct": 100,
+      "skipped": 0,
+      "total": 2,
+    },
+    "statements": Object {
+      "covered": 2,
+      "pct": 100,
+      "skipped": 0,
+      "total": 2,
     },
   },
   "app/utils/my-covered-util.js": Object {
@@ -244,188 +187,27 @@ Object {
   "total": Object {
     "branches": Object {
       "covered": 0,
-      "pct": 100,
+      "pct": 0,
       "skipped": 0,
-      "total": 0,
+      "total": 2,
     },
     "functions": Object {
-      "covered": 1,
-      "pct": 33.33,
-      "skipped": 0,
-      "total": 3,
-    },
-    "lines": Object {
-      "covered": 6,
-      "pct": 66.67,
-      "skipped": 0,
-      "total": 9,
-    },
-    "statements": Object {
-      "covered": 6,
-      "pct": 66.67,
-      "skipped": 0,
-      "total": 9,
-    },
-  },
-}
-`;
-
-exports[`app coverage generation runs coverage when a module has an import error 1`] = `
-Object {
-  "app/app.js": Object {
-    "branches": Object {
-      "covered": 0,
-      "pct": 100,
-      "skipped": 0,
-      "total": 0,
-    },
-    "functions": Object {
-      "covered": 0,
-      "pct": 100,
-      "skipped": 0,
-      "total": 0,
-    },
-    "lines": Object {
-      "covered": 4,
-      "pct": 100,
+      "covered": 3,
+      "pct": 75,
       "skipped": 0,
       "total": 4,
     },
-    "statements": Object {
-      "covered": 4,
-      "pct": 100,
-      "skipped": 0,
-      "total": 4,
-    },
-  },
-  "app/error-module.js": Object {
-    "branches": Object {
-      "covered": 0,
-      "pct": 100,
-      "skipped": 0,
-      "total": 0,
-    },
-    "functions": Object {
-      "covered": 0,
-      "pct": 100,
-      "skipped": 0,
-      "total": 0,
-    },
     "lines": Object {
-      "covered": 1,
-      "pct": 100,
+      "covered": 15,
+      "pct": 93.75,
       "skipped": 0,
-      "total": 1,
+      "total": 16,
     },
     "statements": Object {
-      "covered": 1,
-      "pct": 100,
+      "covered": 15,
+      "pct": 93.75,
       "skipped": 0,
-      "total": 1,
-    },
-  },
-  "app/router.js": Object {
-    "branches": Object {
-      "covered": 0,
-      "pct": 100,
-      "skipped": 0,
-      "total": 0,
-    },
-    "functions": Object {
-      "covered": 0,
-      "pct": 0,
-      "skipped": 0,
-      "total": 1,
-    },
-    "lines": Object {
-      "covered": 1,
-      "pct": 33.33,
-      "skipped": 0,
-      "total": 3,
-    },
-    "statements": Object {
-      "covered": 1,
-      "pct": 33.33,
-      "skipped": 0,
-      "total": 3,
-    },
-  },
-  "app/utils/my-covered-util.js": Object {
-    "branches": Object {
-      "covered": 0,
-      "pct": 100,
-      "skipped": 0,
-      "total": 0,
-    },
-    "functions": Object {
-      "covered": 1,
-      "pct": 100,
-      "skipped": 0,
-      "total": 1,
-    },
-    "lines": Object {
-      "covered": 1,
-      "pct": 100,
-      "skipped": 0,
-      "total": 1,
-    },
-    "statements": Object {
-      "covered": 1,
-      "pct": 100,
-      "skipped": 0,
-      "total": 1,
-    },
-  },
-  "app/utils/my-uncovered-util.js": Object {
-    "branches": Object {
-      "covered": 0,
-      "pct": 100,
-      "skipped": 0,
-      "total": 0,
-    },
-    "functions": Object {
-      "covered": 0,
-      "pct": 0,
-      "skipped": 0,
-      "total": 1,
-    },
-    "lines": Object {
-      "covered": 0,
-      "pct": 0,
-      "skipped": 0,
-      "total": 1,
-    },
-    "statements": Object {
-      "covered": 0,
-      "pct": 0,
-      "skipped": 0,
-      "total": 1,
-    },
-  },
-  "total": Object {
-    "branches": Object {
-      "covered": 0,
-      "pct": 100,
-      "skipped": 0,
-      "total": 0,
-    },
-    "functions": Object {
-      "covered": 1,
-      "pct": 33.33,
-      "skipped": 0,
-      "total": 3,
-    },
-    "lines": Object {
-      "covered": 7,
-      "pct": 70,
-      "skipped": 0,
-      "total": 10,
-    },
-    "statements": Object {
-      "covered": 7,
-      "pct": 70,
-      "skipped": 0,
-      "total": 10,
+      "total": 16,
     },
   },
 }
@@ -459,6 +241,32 @@ Object {
       "total": 4,
     },
   },
+  "app/components/test-component.js": Object {
+    "branches": Object {
+      "covered": 0,
+      "pct": 100,
+      "skipped": 0,
+      "total": 0,
+    },
+    "functions": Object {
+      "covered": 1,
+      "pct": 100,
+      "skipped": 0,
+      "total": 1,
+    },
+    "lines": Object {
+      "covered": 2,
+      "pct": 100,
+      "skipped": 0,
+      "total": 2,
+    },
+    "statements": Object {
+      "covered": 2,
+      "pct": 100,
+      "skipped": 0,
+      "total": 2,
+    },
+  },
   "app/router.js": Object {
     "branches": Object {
       "covered": 0,
@@ -467,20 +275,20 @@ Object {
       "total": 0,
     },
     "functions": Object {
-      "covered": 0,
-      "pct": 0,
+      "covered": 1,
+      "pct": 100,
       "skipped": 0,
       "total": 1,
     },
     "lines": Object {
-      "covered": 1,
-      "pct": 33.33,
+      "covered": 3,
+      "pct": 100,
       "skipped": 0,
       "total": 3,
     },
     "statements": Object {
-      "covered": 1,
-      "pct": 33.33,
+      "covered": 3,
+      "pct": 100,
       "skipped": 0,
       "total": 3,
     },
@@ -545,427 +353,22 @@ Object {
       "total": 0,
     },
     "functions": Object {
-      "covered": 1,
-      "pct": 33.33,
-      "skipped": 0,
-      "total": 3,
-    },
-    "lines": Object {
-      "covered": 6,
-      "pct": 66.67,
-      "skipped": 0,
-      "total": 9,
-    },
-    "statements": Object {
-      "covered": 6,
-      "pct": 66.67,
-      "skipped": 0,
-      "total": 9,
-    },
-  },
-}
-`;
-
-exports[`app coverage generation runs coverage when the path option is used 1`] = `
-Object {
-  "app/app.js": Object {
-    "branches": Object {
-      "covered": 0,
-      "pct": 100,
-      "skipped": 0,
-      "total": 0,
-    },
-    "functions": Object {
-      "covered": 0,
-      "pct": 100,
-      "skipped": 0,
-      "total": 0,
-    },
-    "lines": Object {
-      "covered": 4,
-      "pct": 100,
+      "covered": 3,
+      "pct": 75,
       "skipped": 0,
       "total": 4,
     },
-    "statements": Object {
-      "covered": 4,
-      "pct": 100,
-      "skipped": 0,
-      "total": 4,
-    },
-  },
-  "app/router.js": Object {
-    "branches": Object {
-      "covered": 0,
-      "pct": 100,
-      "skipped": 0,
-      "total": 0,
-    },
-    "functions": Object {
-      "covered": 0,
-      "pct": 0,
-      "skipped": 0,
-      "total": 1,
-    },
     "lines": Object {
-      "covered": 1,
-      "pct": 33.33,
+      "covered": 10,
+      "pct": 90.91,
       "skipped": 0,
-      "total": 3,
+      "total": 11,
     },
     "statements": Object {
-      "covered": 1,
-      "pct": 33.33,
+      "covered": 10,
+      "pct": 90.91,
       "skipped": 0,
-      "total": 3,
-    },
-  },
-  "app/utils/my-covered-util.js": Object {
-    "branches": Object {
-      "covered": 0,
-      "pct": 100,
-      "skipped": 0,
-      "total": 0,
-    },
-    "functions": Object {
-      "covered": 1,
-      "pct": 100,
-      "skipped": 0,
-      "total": 1,
-    },
-    "lines": Object {
-      "covered": 1,
-      "pct": 100,
-      "skipped": 0,
-      "total": 1,
-    },
-    "statements": Object {
-      "covered": 1,
-      "pct": 100,
-      "skipped": 0,
-      "total": 1,
-    },
-  },
-  "app/utils/my-uncovered-util.js": Object {
-    "branches": Object {
-      "covered": 0,
-      "pct": 100,
-      "skipped": 0,
-      "total": 0,
-    },
-    "functions": Object {
-      "covered": 0,
-      "pct": 0,
-      "skipped": 0,
-      "total": 1,
-    },
-    "lines": Object {
-      "covered": 0,
-      "pct": 0,
-      "skipped": 0,
-      "total": 1,
-    },
-    "statements": Object {
-      "covered": 0,
-      "pct": 0,
-      "skipped": 0,
-      "total": 1,
-    },
-  },
-  "total": Object {
-    "branches": Object {
-      "covered": 0,
-      "pct": 100,
-      "skipped": 0,
-      "total": 0,
-    },
-    "functions": Object {
-      "covered": 1,
-      "pct": 33.33,
-      "skipped": 0,
-      "total": 3,
-    },
-    "lines": Object {
-      "covered": 6,
-      "pct": 66.67,
-      "skipped": 0,
-      "total": 9,
-    },
-    "statements": Object {
-      "covered": 6,
-      "pct": 66.67,
-      "skipped": 0,
-      "total": 9,
-    },
-  },
-}
-`;
-
-exports[`app coverage generation uses nested coverageFolder and parallel configuration and run merge-coverage 1`] = `
-Object {
-  "app/app.js": Object {
-    "branches": Object {
-      "covered": 0,
-      "pct": 100,
-      "skipped": 0,
-      "total": 0,
-    },
-    "functions": Object {
-      "covered": 0,
-      "pct": 100,
-      "skipped": 0,
-      "total": 0,
-    },
-    "lines": Object {
-      "covered": 4,
-      "pct": 100,
-      "skipped": 0,
-      "total": 4,
-    },
-    "statements": Object {
-      "covered": 4,
-      "pct": 100,
-      "skipped": 0,
-      "total": 4,
-    },
-  },
-  "app/router.js": Object {
-    "branches": Object {
-      "covered": 0,
-      "pct": 100,
-      "skipped": 0,
-      "total": 0,
-    },
-    "functions": Object {
-      "covered": 0,
-      "pct": 0,
-      "skipped": 0,
-      "total": 1,
-    },
-    "lines": Object {
-      "covered": 1,
-      "pct": 33.33,
-      "skipped": 0,
-      "total": 3,
-    },
-    "statements": Object {
-      "covered": 1,
-      "pct": 33.33,
-      "skipped": 0,
-      "total": 3,
-    },
-  },
-  "app/utils/my-covered-util.js": Object {
-    "branches": Object {
-      "covered": 0,
-      "pct": 100,
-      "skipped": 0,
-      "total": 0,
-    },
-    "functions": Object {
-      "covered": 1,
-      "pct": 100,
-      "skipped": 0,
-      "total": 1,
-    },
-    "lines": Object {
-      "covered": 1,
-      "pct": 100,
-      "skipped": 0,
-      "total": 1,
-    },
-    "statements": Object {
-      "covered": 1,
-      "pct": 100,
-      "skipped": 0,
-      "total": 1,
-    },
-  },
-  "app/utils/my-uncovered-util.js": Object {
-    "branches": Object {
-      "covered": 0,
-      "pct": 100,
-      "skipped": 0,
-      "total": 0,
-    },
-    "functions": Object {
-      "covered": 0,
-      "pct": 0,
-      "skipped": 0,
-      "total": 1,
-    },
-    "lines": Object {
-      "covered": 0,
-      "pct": 0,
-      "skipped": 0,
-      "total": 1,
-    },
-    "statements": Object {
-      "covered": 0,
-      "pct": 0,
-      "skipped": 0,
-      "total": 1,
-    },
-  },
-  "total": Object {
-    "branches": Object {
-      "covered": 0,
-      "pct": 100,
-      "skipped": 0,
-      "total": 0,
-    },
-    "functions": Object {
-      "covered": 1,
-      "pct": 33.33,
-      "skipped": 0,
-      "total": 3,
-    },
-    "lines": Object {
-      "covered": 6,
-      "pct": 66.67,
-      "skipped": 0,
-      "total": 9,
-    },
-    "statements": Object {
-      "covered": 6,
-      "pct": 66.67,
-      "skipped": 0,
-      "total": 9,
-    },
-  },
-}
-`;
-
-exports[`app coverage generation uses parallel configuration and merges coverage when merge-coverage command is issued 1`] = `
-Object {
-  "app/app.js": Object {
-    "branches": Object {
-      "covered": 0,
-      "pct": 100,
-      "skipped": 0,
-      "total": 0,
-    },
-    "functions": Object {
-      "covered": 0,
-      "pct": 100,
-      "skipped": 0,
-      "total": 0,
-    },
-    "lines": Object {
-      "covered": 4,
-      "pct": 100,
-      "skipped": 0,
-      "total": 4,
-    },
-    "statements": Object {
-      "covered": 4,
-      "pct": 100,
-      "skipped": 0,
-      "total": 4,
-    },
-  },
-  "app/router.js": Object {
-    "branches": Object {
-      "covered": 0,
-      "pct": 100,
-      "skipped": 0,
-      "total": 0,
-    },
-    "functions": Object {
-      "covered": 0,
-      "pct": 0,
-      "skipped": 0,
-      "total": 1,
-    },
-    "lines": Object {
-      "covered": 1,
-      "pct": 33.33,
-      "skipped": 0,
-      "total": 3,
-    },
-    "statements": Object {
-      "covered": 1,
-      "pct": 33.33,
-      "skipped": 0,
-      "total": 3,
-    },
-  },
-  "app/utils/my-covered-util.js": Object {
-    "branches": Object {
-      "covered": 0,
-      "pct": 100,
-      "skipped": 0,
-      "total": 0,
-    },
-    "functions": Object {
-      "covered": 1,
-      "pct": 100,
-      "skipped": 0,
-      "total": 1,
-    },
-    "lines": Object {
-      "covered": 1,
-      "pct": 100,
-      "skipped": 0,
-      "total": 1,
-    },
-    "statements": Object {
-      "covered": 1,
-      "pct": 100,
-      "skipped": 0,
-      "total": 1,
-    },
-  },
-  "app/utils/my-uncovered-util.js": Object {
-    "branches": Object {
-      "covered": 0,
-      "pct": 100,
-      "skipped": 0,
-      "total": 0,
-    },
-    "functions": Object {
-      "covered": 0,
-      "pct": 0,
-      "skipped": 0,
-      "total": 1,
-    },
-    "lines": Object {
-      "covered": 0,
-      "pct": 0,
-      "skipped": 0,
-      "total": 1,
-    },
-    "statements": Object {
-      "covered": 0,
-      "pct": 0,
-      "skipped": 0,
-      "total": 1,
-    },
-  },
-  "total": Object {
-    "branches": Object {
-      "covered": 0,
-      "pct": 100,
-      "skipped": 0,
-      "total": 0,
-    },
-    "functions": Object {
-      "covered": 1,
-      "pct": 33.33,
-      "skipped": 0,
-      "total": 3,
-    },
-    "lines": Object {
-      "covered": 6,
-      "pct": 66.67,
-      "skipped": 0,
-      "total": 9,
-    },
-    "statements": Object {
-      "covered": 6,
-      "pct": 66.67,
-      "skipped": 0,
-      "total": 9,
+      "total": 11,
     },
   },
 }
